@@ -8,11 +8,9 @@
             <a class="p-2 text-dark" href="#">About</a>
 
                 <c:if test="${login == 'true'}">
-                    <a>Hello ${user}</a>
-                    <a lass="p-2 text-dark" href="/logout">Log out</a>
+                    <a class = "text-primary">Hello ${current_user.getName()}</a>
+                    <a class="p-2 text-dark" href="/logout">Log out</a>
                 </c:if>
-
-
         </nav>
 
         <c:if test="${login == 'false' || login == null}">
