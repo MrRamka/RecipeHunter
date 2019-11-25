@@ -43,29 +43,31 @@ public class EntranceFilter implements Filter {
             if (selector != null && validator != null) {
                 try {
                     UserAuth userAuth = userAuthDAO.getUserAuthBySelector(selector.getValue());
-                    String userValidator = DigestUtils.md5Hex(validator.getValue());
+                    if (userAuth != null) {
+                        String userValidator = DigestUtils.md5Hex(validator.getValue());
 
-                    if (userAuth.getValidator().equals(userValidator)) {
-                        User currentUser = userDAO.getUserById(userAuth.getUserId());
-                        httpSession.setAttribute("current_user", currentUser);
-                        String newSelector = DigestUtils.md5Hex(currentUser.getName() + String.valueOf(Instant.now()) + currentUser.getSalt());
-                        String newRawValidator = DigestUtils.md5Hex(currentUser.getEmail() + String.valueOf(Instant.now()) + currentUser.getSalt());
-                        String hashedValidator = DigestUtils.md5Hex(newRawValidator);
-                        selector.setValue(newSelector);
-                        validator.setValue(newRawValidator);
-                        httpServletResponse.addCookie(selector);
-                        httpServletResponse.addCookie(validator);
-                        userAuthDAO.delete(userAuth.getUserId());
-                        userAuthDAO.addAuth(newSelector, hashedValidator, userAuth.getUserId());
-                        servletRequest.setAttribute("user", currentUser.getName());
-                    } else {
-                        servletRequest.setAttribute("login", Boolean.FALSE.toString());
+                        if (userAuth.getValidator().equals(userValidator)) {
+                            User currentUser = userDAO.getUserById(userAuth.getUserId());
+                            httpSession.setAttribute("current_user", currentUser);
+                            String newSelector = DigestUtils.md5Hex(currentUser.getName() + String.valueOf(Instant.now()) + currentUser.getSalt());
+                            String newRawValidator = DigestUtils.md5Hex(currentUser.getEmail() + String.valueOf(Instant.now()) + currentUser.getSalt());
+                            String hashedValidator = DigestUtils.md5Hex(newRawValidator);
+                            selector.setValue(newSelector);
+                            validator.setValue(newRawValidator);
+                            httpServletResponse.addCookie(selector);
+                            httpServletResponse.addCookie(validator);
+                            userAuthDAO.delete(userAuth.getUserId());
+                            userAuthDAO.addAuth(newSelector, hashedValidator, userAuth.getUserId());
+                            servletRequest.setAttribute("user", currentUser.getName());
+                            servletRequest.setAttribute("login", Boolean.TRUE.toString());
+                        } else {
+                            servletRequest.setAttribute("login", Boolean.FALSE.toString());
+                        }
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    servletRequest.setAttribute("login", Boolean.FALSE.toString());
                     System.out.println("Error Code: " + e.getErrorCode());
-//                    filterChain.doFilter(servletRequest, servletResponse);
-//                    httpServletResponse.sendRedirect("/login");
                 }
 
             }

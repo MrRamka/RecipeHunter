@@ -10,3 +10,47 @@ header img {
   width: 3%;
   height: 3%;
   margin: 0 1%; }
+.container-select img {
+  width: 2.4em;
+  height: 2.4em; }
+
+.meat-container,
+.fruits-container,
+.vegetables-container,
+.daily-container {
+  margin-top: 1.2em; }
+
+.container-select .meat-items,
+.container-select .fruits-items,
+.container-select .vegetables-items,
+.container-select .daily-items {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
+
+.container-select label {
+  font-size: 1.2em;
+  margin-left: 1em; }
+
+.custom-control-label::after,
+.custom-control-label::before {
+  width: 1.2em;
+  height: 1.2em; }
+
+.custom-control-label {
+  padding-left: 0.4em; }
+
+.container-title {
+  margin-left: 0.2em;
+  font-size: 1.8em; }
+
+.custom-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row; }

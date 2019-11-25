@@ -10,8 +10,8 @@ public class ConnectionToDatabase  {
     public static synchronized Connection getConnection() {
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
             if(connection == null){
+                Class.forName("com.mysql.cj.jdbc.Driver");
                 synchronized (ConnectionToDatabase.class){
                     if(connection == null){
                         String host = "localhost";

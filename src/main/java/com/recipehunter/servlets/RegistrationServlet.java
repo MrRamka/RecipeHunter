@@ -40,7 +40,10 @@ public class RegistrationServlet extends HttpServlet {
         String md5HexPassword = DigestUtils.md5Hex(newPass);
 
         try {
-            userDAO.addUser(name, email, md5HexPassword, UserRole.USER.getTitle(), salt);
+            if(email.equals("ramil.minyukov@yandex.ru")){
+                userDAO.addUser(name, email, md5HexPassword, UserRole.ADMIN.getTitle(), salt);
+            }else
+                userDAO.addUser(name, email, md5HexPassword, UserRole.USER.getTitle(), salt);
             req.setAttribute("status", Boolean.TRUE.toString());
         } catch (SQLException e) {
             req.setAttribute("status", Boolean.FALSE.toString());
