@@ -12,7 +12,7 @@
 <body>
 <jsp:include page="includes/header.jsp"/>
 
-<form class="form" method="POST">
+<form class="form" method="POST" action="/recipes">
     <div class="container container-select">
         <jsp:include page="includes/meat_container.jsp"/>
         <jsp:include page="includes/fruits_container.jsp"/>
