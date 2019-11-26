@@ -34,8 +34,6 @@ public class RecipeFindDAO {
                      queryBuilder.append(" or ");
                  }
             }
-            System.out.println(activeParams.toString());
-            System.out.println(queryBuilder.toString());
             PreparedStatement preparedStatement = connection.prepareStatement(queryBuilder.toString());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){

@@ -15,8 +15,18 @@ import java.util.*;
 @WebServlet("/recipes")
 public class FindRecipesPage extends HttpServlet {
     private RecipeFindDAO recipeFindDAO = new RecipeFindDAO();
+    private static final int PAGE_RECIPE_AMOUNT = 5;
+    private int pageAmount;
+    private List<Recipe> recipes;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int currentPage = Integer.parseInt(req.getParameter("page"));
+        int last = PAGE_RECIPE_AMOUNT + PAGE_RECIPE_AMOUNT * (currentPage-1) < recipes.size() ?
+                PAGE_RECIPE_AMOUNT + PAGE_RECIPE_AMOUNT * (currentPage-1) : recipes.size();
+        List<Recipe> newRecipes = recipes.subList(PAGE_RECIPE_AMOUNT * (currentPage-1), last);
+        req.setAttribute("recipes", newRecipes);
+        req.setAttribute("page_amount", pageAmount);
+        req.setAttribute("current_page" , currentPage);
         getServletContext().getRequestDispatcher("/WEB-INF/views/recipes.jsp").forward(req, resp);
     }
 
@@ -24,8 +34,18 @@ public class FindRecipesPage extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, String> checkbox = getCheckBoxes(req);
         try {
-            List<Recipe> recipes = recipeFindDAO.getRecipiesByIngredients(checkbox);
-            req.setAttribute("recipes", recipes);
+            recipes = recipeFindDAO.getRecipiesByIngredients(checkbox);
+            if (recipes.size() < PAGE_RECIPE_AMOUNT){
+                req.setAttribute("recipes", recipes);
+            }else {
+                pageAmount = recipes.size() / PAGE_RECIPE_AMOUNT + 1;
+                List<Recipe> newRecipes = recipes.subList(0, PAGE_RECIPE_AMOUNT);
+                req.setAttribute("recipes", newRecipes);
+                req.setAttribute("page_amount", pageAmount);
+                req.setAttribute("current_page" , 1);
+                req.setAttribute("page" , 1);
+            }
+
 
 
         } catch (SQLException e) {

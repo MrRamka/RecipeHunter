@@ -18,7 +18,7 @@ header img {
 .fruits-container,
 .vegetables-container,
 .daily-container {
-  margin-top: 1.2em; }
+  margin-top: 2em; }
 
 .container-select .meat-items,
 .container-select .fruits-items,
@@ -54,3 +54,4 @@ header img {
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
   flex-direction: row; }
+
