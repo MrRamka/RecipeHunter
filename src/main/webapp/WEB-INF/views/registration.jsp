@@ -63,24 +63,57 @@
     </div>
 </div>
 <script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function () {
-        'use strict';
-        window.addEventListener('load', function () {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
+    $(function() {
+
+        var field = new Array("user_name", "user_email", "user_pass", "conf_user_pass");
+
+        $("form").submit(function() {
+            var error = 0;
+            $("form").find(":input").each(function() {
+
+                for (var i = 0; i < field.length; i++) {
+                    if ($(this).attr("name") === field[i]) {
+                        if (!$(this).val()) {
+                            $(this).addClass("is-invalid");
+                            error = 1;
+                        } else {
+                            $(this).removeClass("is-invalid").addClass("is-valid");
+                        }
                     }
-                    form.classList.add('was-validated');
-                }, false);
+                }
             });
-        }, false);
-    })();
+            var email = $("#user_email");
+            if (!isValidEmailAddress(email.val())) {
+                error = 2;
+                email.removeClass("is-valid").addClass("is-invalid");
+            } else {
+                email.removeClass("is-invalid").addClass("is-valid");
+            }
+
+            function isValidEmailAddress(emailAddress) {
+                var pattern = new RegExp(
+                    /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+                );
+                return pattern.test(emailAddress);
+            };
+
+
+            var user_pass = $("user_pass");
+            var conf_user_pass = $("conf_user_pass");
+
+            if (user_pass.val() != conf_user_pass.val()) {
+                error = 3;
+                conf_user_pass.removeClass("is-valid").addClass("is-invalid");
+            } else {
+                conf_user_pass.removeClass("is-invalid").addClass("is-valid");
+            }
+            if (error == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        })
+    });
 </script>
 </body>
 </html>
