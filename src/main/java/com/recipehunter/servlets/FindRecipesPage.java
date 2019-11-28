@@ -46,8 +46,6 @@ public class FindRecipesPage extends HttpServlet {
                 req.setAttribute("page" , 1);
             }
 
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

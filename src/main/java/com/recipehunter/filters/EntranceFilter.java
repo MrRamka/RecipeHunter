@@ -52,17 +52,31 @@ public class EntranceFilter implements Filter {
                             String newSelector = DigestUtils.md5Hex(currentUser.getName() + String.valueOf(Instant.now()) + currentUser.getSalt());
                             String newRawValidator = DigestUtils.md5Hex(currentUser.getEmail() + String.valueOf(Instant.now()) + currentUser.getSalt());
                             String hashedValidator = DigestUtils.md5Hex(newRawValidator);
-                            selector.setValue(newSelector);
-                            validator.setValue(newRawValidator);
+                            selector.setMaxAge(0);
+                            validator.setMaxAge(0);
                             httpServletResponse.addCookie(selector);
                             httpServletResponse.addCookie(validator);
+                            httpServletResponse.addCookie(new Cookie("selector", newSelector));
+                            httpServletResponse.addCookie(new Cookie("validator", newRawValidator));
                             userAuthDAO.delete(userAuth.getUserId());
                             userAuthDAO.addAuth(newSelector, hashedValidator, userAuth.getUserId());
                             servletRequest.setAttribute("user", currentUser.getName());
                             servletRequest.setAttribute("login", Boolean.TRUE.toString());
                         } else {
                             servletRequest.setAttribute("login", Boolean.FALSE.toString());
+                            selector.setMaxAge(0);
+                            validator.setMaxAge(0);
+
+                            httpServletResponse.addCookie(selector);
+                            httpServletResponse.addCookie(validator);
                         }
+                    }else {
+                        servletRequest.setAttribute("login", Boolean.FALSE.toString());
+                        System.out.println(selector.getValue());
+                        selector.setMaxAge(0);
+                        validator.setMaxAge(0);
+                        httpServletResponse.addCookie(selector);
+                        httpServletResponse.addCookie(validator);
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
