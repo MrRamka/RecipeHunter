@@ -47,7 +47,9 @@ public class FindRecipesPage extends HttpServlet {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            req.setAttribute("error", e);
+            getServletContext().getRequestDispatcher("/WEB-INF/views/error_page.jsp").forward(req, resp);
+            return;
         }
         getServletContext().getRequestDispatcher("/WEB-INF/views/recipes.jsp").forward(req, resp);
     }

@@ -36,7 +36,9 @@ public class LogoutServlet extends HttpServlet {
 
                 userAuthDAO.delete(current_user.getId());
             } catch (SQLException e) {
-                e.printStackTrace();
+                req.setAttribute("error", e);
+                getServletContext().getRequestDispatcher("/WEB-INF/views/error_page.jsp").forward(req, resp);
+                return;
             }
 
         }

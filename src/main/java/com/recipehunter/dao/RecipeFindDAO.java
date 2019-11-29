@@ -1,6 +1,7 @@
 package com.recipehunter.dao;
 
 import com.recipehunter.entities.Recipe;
+import com.recipehunter.entities.RecipeType;
 import com.recipehunter.utils.ConnectionToDatabase;
 
 import java.sql.Connection;
@@ -27,22 +28,36 @@ public class RecipeFindDAO {
                 " left join r_products on product_id = r_products.id where");
         if (activeParams.size() > 0) {
             for (int i = 0; i < activeParams.size(); i++) {
-                 queryBuilder.append(" `name` like \"%" );
-                 queryBuilder.append(activeParams.get(i));
-                 queryBuilder.append("%\" ");
-                 if (i != activeParams.size() -1){
-                     queryBuilder.append(" or ");
-                 }
+                queryBuilder.append(" `name` like \"%");
+                queryBuilder.append(activeParams.get(i));
+                queryBuilder.append("%\" ");
+                if (i != activeParams.size() - 1) {
+                    queryBuilder.append(" or ");
+                }
             }
             PreparedStatement preparedStatement = connection.prepareStatement(queryBuilder.toString());
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                int r_id= resultSet.getInt("r_id");
+            while (resultSet.next()) {
+                int r_id = resultSet.getInt("r_id");
                 Recipe recipe = recipeDAO.getRecipeById(r_id);
                 recipes.add(recipe);
             }
         }
 
         return recipes;
+    }
+
+
+    public List<RecipeType> getRecipesType() throws SQLException {
+        List<RecipeType> recipeTypes = new ArrayList<>();
+        String q = "select *  from r_categories";
+        PreparedStatement preparedStatement = connection.prepareStatement(q);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()){
+            recipeTypes.add(new RecipeType(resultSet.getInt("id"), resultSet.getString("name")));
+        }
+
+        return recipeTypes;
     }
 }

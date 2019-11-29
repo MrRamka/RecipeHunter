@@ -56,7 +56,6 @@ public class LoginServlet extends HttpServlet {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             resp.sendRedirect("/login");
         }
 

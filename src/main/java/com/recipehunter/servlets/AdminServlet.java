@@ -47,7 +47,9 @@ public class AdminServlet extends HttpServlet {
                 req.setAttribute("users_amount", stat.getUsersAmount());
                 req.setAttribute("recipes_amount", stat.getRecipesAmount());
             } catch (SQLException e) {
-                //TODO: Add error page
+                req.setAttribute("error", e);
+                getServletContext().getRequestDispatcher("/WEB-INF/views/error_page.jsp").forward(req, resp);
+                return;
             }
             getServletContext().getRequestDispatcher("/WEB-INF/views/admin_page.jsp").forward(req, resp);
         } else {

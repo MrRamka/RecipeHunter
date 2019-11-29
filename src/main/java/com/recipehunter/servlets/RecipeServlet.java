@@ -65,7 +65,6 @@ public class RecipeServlet extends HttpServlet {
                     req.setAttribute("error", true);
                 }
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
                 req.setAttribute("error", true);
                 req.setAttribute("isSavedAgain", true);
             }

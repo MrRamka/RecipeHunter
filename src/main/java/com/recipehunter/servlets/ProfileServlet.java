@@ -30,16 +30,11 @@ public class ProfileServlet extends HttpServlet {
         if (currentUser != null) {
             try {
                 recipes = recipeUserDAO.getUsersSavedRecipes(currentUser.getId());
-//                pageAmount = recipes.size() / PAGE_RECIPE_AMOUNT + 1;
-//                int currentPage = Integer.parseInt(req.getParameter("page"));
-//                int last = PAGE_RECIPE_AMOUNT + PAGE_RECIPE_AMOUNT * (currentPage - 1) < recipes.size() ?
-//                        PAGE_RECIPE_AMOUNT + PAGE_RECIPE_AMOUNT * (currentPage - 1) : recipes.size();
-//                List<Recipe> newRecipes = recipes.subList(PAGE_RECIPE_AMOUNT * (currentPage - 1), last);
                 req.setAttribute("recipes", recipes);
-//                req.setAttribute("page_amount", pageAmount);
-//                req.setAttribute("current_page", currentPage);
             } catch (SQLException e) {
-                e.printStackTrace();
+                req.setAttribute("error", e);
+                getServletContext().getRequestDispatcher("/WEB-INF/views/error_page.jsp").forward(req, resp);
+                return;
             }
         }
 

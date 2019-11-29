@@ -50,9 +50,31 @@ public class RecipeDAO {
         return null;
     }
 
-    public static void main(String[] args) throws SQLException {
-        RecipeDAO recipeDAO = new RecipeDAO();
-        System.out.println(recipeDAO.getRecipeById(42).toString());
 
+    public int addRecipe(String title, int category_id, String time, String steps, int author) throws SQLException {
+        String q = "insert into recipes (title, category_id, `time`, steps, author) values (?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(q);
+        preparedStatement.setString(1, title);
+        preparedStatement.setInt(2, category_id);
+        preparedStatement.setString(3, time);
+        preparedStatement.setString(4, steps);
+        preparedStatement.setInt(5, author);
+        return preparedStatement.executeUpdate();
+    }
+
+    public int getRecipeIdByParams(String name) throws SQLException {
+        //, String recipeType, String recipeTime, String recipeDirections
+        String q = "select id from recipes where title = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(q);
+        preparedStatement.setString(1, name);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt("id");
+    }
+    public int deleteRecipeIdByParams(String name) throws SQLException {
+        String q = "delete from recipes where title = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(q);
+        preparedStatement.setString(1, name);
+        return preparedStatement.executeUpdate();
     }
 }

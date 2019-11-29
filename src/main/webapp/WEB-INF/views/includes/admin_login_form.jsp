@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
+<div class="row justify-content-center">
+    <div class="col-md-8">
         <form class="form" method="POST" action="/admin">
             <div class="form-group">
                 <label for="user_password">Enter Your Password</label>

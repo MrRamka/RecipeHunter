@@ -32,23 +32,23 @@ public class RegistrationServlet extends HttpServlet {
         String name = req.getParameter("user_name");
         String email = req.getParameter("user_email");
         String pass = req.getParameter("user_pass");
-//        String conf_pass = req.getParameter("conf_user_pass");
+        String conf_pass = req.getParameter("conf_user_pass");
         String salt = String.valueOf(Instant.now().toString().hashCode());
         //Adding new user to db
-//        if (pass.equals(conf_pass)) {
-        String newPass = pass + salt;
-        String md5HexPassword = DigestUtils.md5Hex(newPass);
+        if (pass.equals(conf_pass)) {
+            String newPass = pass + salt;
+            String md5HexPassword = DigestUtils.md5Hex(newPass);
 
-        try {
-            if(email.equals("ramil.minyukov@yandex.ru")){
-                userDAO.addUser(name, email, md5HexPassword, UserRole.ADMIN.getTitle(), salt);
-            }else
-                userDAO.addUser(name, email, md5HexPassword, UserRole.USER.getTitle(), salt);
-            req.setAttribute("status", Boolean.TRUE.toString());
-        } catch (SQLException e) {
-            req.setAttribute("status", Boolean.FALSE.toString());
-            e.printStackTrace();
-//            }
+            try {
+                if (email.equals("ramil.minyukov@yandex.ru")) {
+                    userDAO.addUser(name, email, md5HexPassword, UserRole.ADMIN.getTitle(), salt);
+                } else
+                    userDAO.addUser(name, email, md5HexPassword, UserRole.USER.getTitle(), salt);
+                req.setAttribute("status", Boolean.TRUE.toString());
+            } catch (SQLException e) {
+                req.setAttribute("status", Boolean.FALSE.toString());
+            
+            }
 
         }
 
