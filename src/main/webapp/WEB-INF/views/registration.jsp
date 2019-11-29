@@ -65,10 +65,10 @@
 <script>
     $(function() {
 
-        var field = new Array("user_name", "user_email", "user_pass", "conf_user_pass");
+        let field = new Array("user_name", "user_email", "user_pass", "conf_user_pass");
 
         $("form").submit(function() {
-            var error = 0;
+            let error = 0;
             $("form").find(":input").each(function() {
 
                 for (var i = 0; i < field.length; i++) {
@@ -82,7 +82,7 @@
                     }
                 }
             });
-            var email = $("#user_email");
+            let email = $("#user_email");
             if (!isValidEmailAddress(email.val())) {
                 error = 2;
                 email.removeClass("is-valid").addClass("is-invalid");
@@ -98,8 +98,8 @@
             };
 
 
-            var user_pass = $("user_pass");
-            var conf_user_pass = $("conf_user_pass");
+            let user_pass = $("user_pass");
+            let conf_user_pass = $("conf_user_pass");
 
             if (user_pass.val() != conf_user_pass.val()) {
                 error = 3;

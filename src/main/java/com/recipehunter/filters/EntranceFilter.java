@@ -56,8 +56,12 @@ public class EntranceFilter implements Filter {
                             validator.setMaxAge(0);
                             httpServletResponse.addCookie(selector);
                             httpServletResponse.addCookie(validator);
-                            httpServletResponse.addCookie(new Cookie("selector", newSelector));
-                            httpServletResponse.addCookie(new Cookie("validator", newRawValidator));
+                            Cookie s = new Cookie("selector", newSelector);
+                            s.setMaxAge(60 * 60 * 24 * 14);
+                            Cookie v = new Cookie("validator", newRawValidator);
+                            v.setMaxAge(60 * 60 * 24 * 14);
+                            httpServletResponse.addCookie(s);
+                            httpServletResponse.addCookie(v);
                             userAuthDAO.delete(userAuth.getUserId());
                             userAuthDAO.addAuth(newSelector, hashedValidator, userAuth.getUserId());
                             servletRequest.setAttribute("user", currentUser.getName());
@@ -79,9 +83,7 @@ public class EntranceFilter implements Filter {
                         httpServletResponse.addCookie(validator);
                     }
                 } catch (SQLException e) {
-                    e.printStackTrace();
                     servletRequest.setAttribute("login", Boolean.FALSE.toString());
-                    System.out.println("Error Code: " + e.getErrorCode());
                 }
 
             }

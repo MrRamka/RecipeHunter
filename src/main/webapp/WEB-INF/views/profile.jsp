@@ -14,6 +14,9 @@
 <div class="container">
     <c:if test="${login == 'true'}">
         <h2 class="text-primary">Hello, ${current_user.getName()}</h2>
+        <c:if test="${current_user.getRole() == 'Admin'}">
+            <h3 class="text-success"><a href="/admin" class="text-dark">Admin page</a></h3>
+        </c:if>
         <h3>Saved recipes</h3>
         <br>
         <table class="table table-hover">
@@ -31,20 +34,6 @@
             </tbody>
 
         </table>
-        <%--<c:if test="${page_amount != null}">--%>
-            <%--<c:if test="${current_page == 1}">--%>
-                <%--<a href="/recipes?page=${current_page+1}">Next</a>--%>
-            <%--</c:if>--%>
-            <%--<c:if test="${current_page != 1 && current_page != page_amount}">--%>
-
-                <%--<a href="/recipes?page=${current_page-1}">Prev</a>--%>
-                <%--<a href="/recipes?page=${current_page+1}">Next</a>--%>
-            <%--</c:if>--%>
-            <%--<c:if test="${current_page == page_amount}">--%>
-                <%--<a href="/recipes?page=${current_page-1}">Prev</a>--%>
-            <%--</c:if>--%>
-        <%--</c:if>--%>
-
 
     </c:if>
 </div>
