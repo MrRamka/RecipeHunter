@@ -1,6 +1,7 @@
 package com.recipehunter.servlets;
 
 import com.recipehunter.dao.UserDAO;
+import com.recipehunter.entities.User;
 import com.recipehunter.entities.UserRole;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -40,14 +41,16 @@ public class RegistrationServlet extends HttpServlet {
             String md5HexPassword = DigestUtils.md5Hex(newPass);
 
             try {
-                if (email.equals("ramil.minyukov@yandex.ru")) {
-                    userDAO.addUser(name, email, md5HexPassword, UserRole.ADMIN.getTitle(), salt);
-                } else
-                    userDAO.addUser(name, email, md5HexPassword, UserRole.USER.getTitle(), salt);
-                req.setAttribute("status", Boolean.TRUE.toString());
+                userDAO.addUser(name, email, md5HexPassword, UserRole.USER.getTitle(), salt);
+                HttpSession session = req.getSession();
+                UserDAO userDAO = new UserDAO();
+                User current_user = userDAO.getUserByEmail(email);
+                session.setAttribute("current_user", current_user);
+                resp.sendRedirect("/home");
+                return;
             } catch (SQLException e) {
                 req.setAttribute("status", Boolean.FALSE.toString());
-            
+
             }
 
         }
