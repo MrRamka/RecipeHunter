@@ -46,5 +46,11 @@ public class RecipeUserDAO {
         resultSet.next();
         return resultSet.getInt("amount");
     }
-
+    public int deleteSavedRecipe(int userId, int recipeId) throws SQLException {
+        String q = "delete from recipe_user where user_id = ? and recipe_id = ?";
+        PreparedStatement p = connection.prepareStatement(q);
+        p.setInt(1, userId);
+        p.setInt(2, recipeId);
+        return p.executeUpdate();
+    }
 }

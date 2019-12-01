@@ -10,7 +10,6 @@
     </div>
     <button type="submit" id="edit_button" class="btn btn-success float-right">Edit</button>
 </form>
-<h3 id="response"></h3>
 <c:if test="${status == true}">
     <p class="text-success">Password updated successfully</p>
 </c:if>

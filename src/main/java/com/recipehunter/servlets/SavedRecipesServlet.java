@@ -32,6 +32,7 @@ public class SavedRecipesServlet extends HttpServlet {
                 req.setAttribute("current_page", currentPage);
                 req.setAttribute("page_amount", recipeAmount);
                 req.setAttribute("recipes", recipes);
+
             } catch (SQLException e) {
                 req.setAttribute("error", e);
                 getServletContext().getRequestDispatcher("/WEB-INF/views/error_page.jsp").forward(req, resp);
