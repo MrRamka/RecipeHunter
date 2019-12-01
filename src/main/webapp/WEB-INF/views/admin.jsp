@@ -14,9 +14,6 @@
 <div class="container">
     <c:if test="${is_admin == true}">
         <jsp:include page="includes/admin_login_form.jsp"/>
-        <c:if test="${status == false}">
-            <p class="text-danger">Incorrect password</p>
-        </c:if>
     </c:if>
     <c:if test="${is_admin == false}">
         <jsp:include page="includes/admin_error_page.jsp"/>

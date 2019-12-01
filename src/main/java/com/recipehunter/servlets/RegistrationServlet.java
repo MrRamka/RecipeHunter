@@ -50,7 +50,6 @@ public class RegistrationServlet extends HttpServlet {
                 return;
             } catch (SQLException e) {
                 req.setAttribute("status", Boolean.FALSE.toString());
-
             }
 
         }

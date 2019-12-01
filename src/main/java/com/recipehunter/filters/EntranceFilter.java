@@ -9,10 +9,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -67,20 +64,12 @@ public class EntranceFilter implements Filter {
                             servletRequest.setAttribute("user", currentUser.getName());
                             servletRequest.setAttribute("login", Boolean.TRUE.toString());
                         } else {
-                            servletRequest.setAttribute("login", Boolean.FALSE.toString());
-                            selector.setMaxAge(0);
-                            validator.setMaxAge(0);
+                            deleteCookie(selector, validator, servletRequest, httpServletResponse);
 
-                            httpServletResponse.addCookie(selector);
-                            httpServletResponse.addCookie(validator);
                         }
-                    }else {
-                        servletRequest.setAttribute("login", Boolean.FALSE.toString());
-                        System.out.println(selector.getValue());
-                        selector.setMaxAge(0);
-                        validator.setMaxAge(0);
-                        httpServletResponse.addCookie(selector);
-                        httpServletResponse.addCookie(validator);
+                    } else {
+                        deleteCookie(selector, validator, servletRequest, httpServletResponse);
+
                     }
                 } catch (SQLException e) {
                     servletRequest.setAttribute("login", Boolean.FALSE.toString());
@@ -109,4 +98,11 @@ public class EntranceFilter implements Filter {
         return null;
     }
 
+    private static void deleteCookie(Cookie selector, Cookie validator, ServletRequest servletRequest, HttpServletResponse httpServletResponse) {
+        servletRequest.setAttribute("login", Boolean.FALSE.toString());
+        selector.setMaxAge(0);
+        validator.setMaxAge(0);
+        httpServletResponse.addCookie(selector);
+        httpServletResponse.addCookie(validator);
+    }
 }

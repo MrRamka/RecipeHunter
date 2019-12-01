@@ -16,6 +16,8 @@
         <h3>User amount: <span class="text-primary">${users_amount}</span></h3>
         <h3>Recipe amount: <span class="text-primary">${recipes_amount}</span></h3>
     </c:if>
+
+
 </div>
 </body>
 </html>

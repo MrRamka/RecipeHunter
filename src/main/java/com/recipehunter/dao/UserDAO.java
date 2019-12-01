@@ -19,6 +19,7 @@ public class UserDAO {
         ResultSet resultSet = getUserByIdStatement.executeQuery();
         return getUserByResultSet(resultSet);
     }
+
     public User getUserByEmail(String userEmail) throws SQLException {
         String sqlQuery = "SELECT * FROM users WHERE email = ?";
         PreparedStatement getUserByIdStatement = connection.prepareStatement(sqlQuery);
@@ -47,6 +48,16 @@ public class UserDAO {
                 resultSet.getString("role"),
                 resultSet.getString("salt")
         );
+    }
+
+    public int updateUserPassword(int userId, String newPass) throws SQLException {
+        String sqlQuery = "update users set `password` = ? where id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+        preparedStatement.setString(1, newPass);
+        preparedStatement.setInt(2, userId);
+        return preparedStatement.executeUpdate();
+
+
     }
 
 

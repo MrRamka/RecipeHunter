@@ -14,9 +14,11 @@
 <div class="container">
     <c:if test="${login == 'true'}">
         <h2 class="text-primary">Hello, ${current_user.getName()}</h2>
+        <h3><a href="/editpass" class=" btn btn-outline-primary">Edit password</a></h3>
         <c:if test="${current_user.getRole() == 'Admin'}">
-            <h3 class="text-success"><a href="/admin" class="text-dark">Admin page</a></h3>
+            <h3><a href="/admin" class="btn btn-outline-danger">Admin page</a></h3>
         </c:if>
+
         <h3>Saved recipes</h3>
         <br>
         <table class="table table-hover">
