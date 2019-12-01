@@ -18,7 +18,7 @@ public class ConnectionToDatabase  {
                         int port = 3306;
                         String name = "recipe_hunter_db";
                         String url = "jdbc:mysql://" + host + ":" + port + "/" + name + "?serverTimezone=UTC";
-                        connection = DriverManager.getConnection(url,"root","rzqtgT8xA325IKeW");
+                            connection = DriverManager.getConnection(url,"root","rzqtgT8xA325IKeW");
                     }
                 }
 

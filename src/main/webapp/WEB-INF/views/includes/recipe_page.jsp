@@ -1,13 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="container">
-    <br>
-    <c:if test="${isSaved == true}">
-        <p class="text-success">Recipe saved</p>
-    </c:if>
-    <c:if test="${isSaved == false}">
-        <p class="text-danger">Cant save recipe. You must log in to save recipes</p>
-    </c:if>
+    <h4 id="content"></h4>
     <br>
     <h2 class="text-primary">${recipe.getTitle()}</h2>
     <h5>Category: ${recipe.getCategoryId()}</h5>
@@ -32,7 +26,21 @@
         </tbody>
     </table>
     <p>${recipe.getSteps()}</p>
-    <form method="post" action="">
-        <button type="submit" class="btn btn-success m-2 float-right">Save</button>
-    </form>
+    <button id="save" class="btn btn-success m-2 float-right">Save</button>
 </div>
+<script>
+    $("#save").click(function () {
+            $.ajax({
+                url: "save_recipe",
+                type: "POST",
+                data: {
+                    recipe_id: ${recipe.getId()}
+                },
+                success: function (data) {
+                    $("#content").html(data);
+                }
+            })
+            ;
+        }
+    );
+</script>
