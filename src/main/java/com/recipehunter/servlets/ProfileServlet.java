@@ -26,18 +26,6 @@ public class ProfileServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User currentUser = (User) req.getSession().getAttribute("current_user");
-        if (currentUser != null) {
-            try {
-                recipes = recipeUserDAO.getUsersSavedRecipes(currentUser.getId());
-                req.setAttribute("recipes", recipes);
-            } catch (SQLException e) {
-                req.setAttribute("error", e);
-                getServletContext().getRequestDispatcher("/WEB-INF/views/error_page.jsp").forward(req, resp);
-                return;
-            }
-        }
-
         getServletContext().getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(req, resp);
     }
 

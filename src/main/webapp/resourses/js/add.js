@@ -17,7 +17,7 @@ create_button.onclick = function(){
     new_name.name = name_name + current_id;
     new_name.className = "form-control";
     new_name.required = true;
-    new_name.placeholder = "Enter ingredient name";
+    new_name.placeholder = "Enter name";
 
 
     new_row.appendChild(new_name_col);
@@ -30,7 +30,7 @@ create_button.onclick = function(){
     new_amount.name = amount_name + current_id;
     new_amount.className = "form-control";
     new_amount.required = true;
-    new_amount.placeholder = "Enter ingredient amount(1.5)";
+    new_amount.placeholder = "Enter amount(1.5)";
 
 
     new_row.appendChild(new_amount_col);
@@ -44,7 +44,7 @@ create_button.onclick = function(){
     new_amount_type.name = amount_type_name + current_id;
     new_amount_type.className = "form-control";
     new_amount_type.required = true;
-    new_amount_type.placeholder = "Enter ingredient amount type(ml)";
+    new_amount_type.placeholder = "Enter amount type(ml)";
 
 
     new_row.appendChild(new_amount_type_col);

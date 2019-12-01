@@ -77,4 +77,29 @@ public class RecipeDAO {
         preparedStatement.setString(1, name);
         return preparedStatement.executeUpdate();
     }
+    public List<Recipe> getRecipesByAuthor(int id, int amount, int start) throws SQLException {
+        List<Recipe> recipes = new ArrayList<>();
+        String q = "select id from recipes where author = ? limit ? offset ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(q);
+        preparedStatement.setInt(1, id);
+        preparedStatement.setInt(2, amount);
+        preparedStatement.setInt(3, start);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()){
+            recipes.add(getRecipeById(resultSet.getInt("id")));
+        }
+        return recipes;
+
+
+    }
+    public int getAmountRecipesByAuthor(int id) throws SQLException {
+        String q = "select count(id) as amount from recipes where author = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(q);
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt("amount");
+    }
+
+
 }

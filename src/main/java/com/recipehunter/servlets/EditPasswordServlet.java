@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet("/editpass")
-public class EditPassword extends HttpServlet {
+public class EditPasswordServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,7 +22,7 @@ public class EditPassword extends HttpServlet {
         HttpSession httpSession = req.getSession();
         User user = (User) httpSession.getAttribute("current_user");
         if (user != null) {
-            getServletContext().getRequestDispatcher("/WEB-INF/views/edit_pass.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/WEB-INF/views/includes/edit_pass.jsp").forward(req, resp);
         } else {
             getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
         }
@@ -45,18 +45,15 @@ public class EditPassword extends HttpServlet {
                     userDAO.updateUserPassword(user.getId(), newHashPass);
                     User userNewPass = userDAO.getUserById(user.getId());
                     httpSession.setAttribute("current_user", userNewPass);
-//                    resp.setContentType("text/plain");
-//                    resp.getWriter().write("Password updated successfully");
-                    req.setAttribute("status", true);
+                    resp.getWriter().write("Password updated successfully");
                 } catch (SQLException e) {
                     req.setAttribute("error", e);
                     getServletContext().getRequestDispatcher("/WEB-INF/views/error_page.jsp").forward(req, resp);
                 }
             } else {
-//                resp.getWriter().println("Old password is incorrect");
-                req.setAttribute("status", false);
+                resp.getWriter().println("Old password is incorrect");
             }
-            getServletContext().getRequestDispatcher("/WEB-INF/views/edit_pass.jsp").forward(req, resp);
+            req.setAttribute("edit_password_response", true);
         } else {
             getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
 

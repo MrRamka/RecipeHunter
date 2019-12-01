@@ -1,26 +1,19 @@
 $(document).ready(function () {
-    let edit_button = document.getElementById("edit_button");
-    edit_button.onclick = function () {
-        alert();
-        $.ajax({
-            type: "POST",
-            url: "editpass",
-            data: {
-                user_password: document.getElementById("user_password").value,
-                user_new_password: document.getElementById("user_new_password").value
-            },
-            success:
-                function(msg) {
-                    alert("Success");
-                    document.getElementById("answer").textContent = msg;
+    $("#edit_button").click(function () {
+            $.ajax({
+                url: "editpass",
+                type: "POST",
+                data: {
+                    user_password: $("#user_password").val(),
+                    user_new_password: $("#user_new_password").val()
                 },
-            error:
-                function(msg) {
-                    alert("Error");
-                    document.getElementById("answer").textContent = msg;
+                success: function (data) {
+                    $("#user_password").val("");
+                    $("#user_new_password").val("");
+                    $("#response").html(data);
                 }
-
-
-        })
-    };
+            });
+            return false;
+        }
+    )
 });

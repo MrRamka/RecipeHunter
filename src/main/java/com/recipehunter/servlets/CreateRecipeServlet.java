@@ -3,12 +3,8 @@ package com.recipehunter.servlets;
 import com.recipehunter.dao.IngredientDAO;
 import com.recipehunter.dao.RecipeDAO;
 import com.recipehunter.dao.RecipeFindDAO;
-import com.recipehunter.dao.Stat;
-import com.recipehunter.entities.Recipe;
 import com.recipehunter.entities.RecipeType;
 import com.recipehunter.entities.User;
-import org.apache.commons.codec.digest.DigestUtils;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,7 +32,7 @@ public class CreateRecipeServlet extends HttpServlet {
                 getServletContext().getRequestDispatcher("/WEB-INF/views/error_page.jsp").forward(req, resp);
                 return;
             }
-            getServletContext().getRequestDispatcher("/WEB-INF/views/create.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/WEB-INF/views/includes/create.jsp").forward(req, resp);
         } else {
             getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
         }
@@ -73,16 +69,13 @@ public class CreateRecipeServlet extends HttpServlet {
                     ingredientDAO.deleteIngredientByRecipeId(recipeDAO.getRecipeIdByParams(recipeTitle));
                     recipeDAO.deleteRecipeIdByParams(recipeTitle);
                 } catch (SQLException e1) {
-                    req.setAttribute("error", e1);
-                    getServletContext().getRequestDispatcher("/WEB-INF/views/error_page.jsp").forward(req, resp);
+                    resp.getWriter().write("Cant create recipe");
                     return;
                 }
-                req.setAttribute("error", e);
-                getServletContext().getRequestDispatcher("/WEB-INF/views/error_page.jsp").forward(req, resp);
+                resp.getWriter().write("Cant create recipe");
                 return;
             }
-            req.setAttribute("status", true);
-            getServletContext().getRequestDispatcher("/WEB-INF/views/create.jsp").forward(req, resp);
+            resp.getWriter().write("Recipe created successfully");
         }else {
             getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
         }
