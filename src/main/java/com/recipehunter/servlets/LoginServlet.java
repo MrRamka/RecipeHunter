@@ -52,11 +52,16 @@ public class LoginServlet extends HttpServlet {
                     resp.sendRedirect("/home");
                 }
                 else {
-                    resp.sendRedirect("/login");
+                    req.setAttribute("status", false);
+                    getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
                 }
+            }else {
+                req.setAttribute("status", false);
+                getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
             }
         } catch (SQLException e) {
-            resp.sendRedirect("/login");
+            req.setAttribute("status", false);
+            getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
         }
 
     }

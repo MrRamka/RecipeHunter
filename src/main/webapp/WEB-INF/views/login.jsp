@@ -39,11 +39,12 @@
                 <button type="submit" class="btn btn-success">Submit</button>
                 <a class="create-acc" href="/registration">Create an account</a>
             </form>
-            <c:if test="${!status.isEmpty()}">
-                <c:if test="${status == 'false'}">
+            <a href="http://oauth.vk.com/authorize?client_id=7229885&redirect_uri=http://localhost:8080/vklogin&response_type=code&scope=email&v=5.103"
+               title="Enter with vk">Enter with vk</a>
+                <c:if test="${status == false}">
                     <p class="text-danger">Incorrect email or password.</p>
                 </c:if>
-            </c:if>
+
         </div>
     </div>
 </div>

@@ -51,6 +51,8 @@
                 <button type="submit" class="btn btn-primary">Create</button>
                 <a class="create-acc" href="/login">Login</a>
             </form>
+            <a href="http://oauth.vk.com/authorize?client_id=7229885&redirect_uri=http://localhost:8080/vklogin&response_type=code&scope=email&v=5.103"
+               title="Enter with vk">Enter with vk</a>
             <c:if test="${!status.isEmpty()}">
                 <c:if test="${status == 'true'}">
                     <p class="text-success">User created successfully</p>

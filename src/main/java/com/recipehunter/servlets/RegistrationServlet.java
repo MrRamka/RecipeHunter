@@ -43,7 +43,6 @@ public class RegistrationServlet extends HttpServlet {
             try {
                 userDAO.addUser(name, email, md5HexPassword, UserRole.USER.getTitle(), salt);
                 HttpSession session = req.getSession();
-                UserDAO userDAO = new UserDAO();
                 User current_user = userDAO.getUserByEmail(email);
                 session.setAttribute("current_user", current_user);
                 resp.sendRedirect("/home");

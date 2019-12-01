@@ -56,8 +56,6 @@ public class UserDAO {
         preparedStatement.setString(1, newPass);
         preparedStatement.setInt(2, userId);
         return preparedStatement.executeUpdate();
-
-
     }
 
 
